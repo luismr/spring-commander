@@ -57,7 +57,23 @@ git clone git@github.com:luismr/spring-commander.git
 
 #### Using Maven
 
-1. Add the GitHub Packages repository to your `pom.xml`:
+1. First, configure your GitHub token in `~/.m2/settings.xml`:
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>github</id>
+      <username>YOUR_GITHUB_USERNAME</username>
+      <password>YOUR_GITHUB_TOKEN</password>
+    </server>
+  </servers>
+</settings>
+```
+
+> **Note:** If you don't have a GitHub token, you can request one by contacting me on [X (@luismachadoreis)](https://x.com/luismachadoreis) or [BlueSky (@luismachadoreis.bsky.social)](https://bsky.app/profile/luismachadoreis.bsky.social).
+
+2. Add the GitHub Packages repository to your `pom.xml`:
 
 ```xml
 <repositories>
@@ -69,7 +85,7 @@ git clone git@github.com:luismr/spring-commander.git
 </repositories>
 ```
 
-2. Add the dependency to your `pom.xml`:
+3. Add the dependency to your `pom.xml`:
 
 ```xml
 <dependency>
@@ -81,18 +97,29 @@ git clone git@github.com:luismr/spring-commander.git
 
 ### Gradle
 
-1. Add the GitHub Packages repository to your `build.gradle`:
+1. First, configure your GitHub token in `~/.gradle/gradle.properties`:
+
+```properties
+gpr.user=YOUR_GITHUB_USERNAME
+gpr.key=YOUR_GITHUB_TOKEN
+```
+
+2. Add the GitHub Packages repository to your `build.gradle`:
 
 ```groovy
 repositories {
     maven {
         name = "GitHubPackages"
         url = uri("https://maven.pkg.github.com/luismr/spring-commander")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+        }
     }
 }
 ```
 
-2. Add the dependency to your `build.gradle`:
+3. Add the dependency to your `build.gradle`:
 
 ```groovy
 implementation 'dev.luismachadoreis.blueprint:spring-commander:0.0.3'
