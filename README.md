@@ -1,4 +1,4 @@
-# Spring Commander
+# Spring Commander 🍮
 
 ![Java](https://img.shields.io/badge/Java-21-blue)
 ![SpringBoot](https://img.shields.io/badge/SpringBoot-3.4.x-blue)
@@ -72,24 +72,14 @@ Add the following dependency to your `pom.xml`:
 Add the dependency to your `build.gradle`:
 
 ```groovy
-implementation 'dev.luismachadoreis.blueprint:spring-commander:0.0.1-SNAPSHOT'
+implementation 'dev.luismachadoreis.blueprint:spring-commander:0.0.1'
 ```
 
 ## Usage
 
-### Basic Setup
+### Commands
 
-1. Add the dependency to your Spring Boot application's `pom.xml`:
-
-```xml
-<dependency>
-    <groupId>dev.luismachadoreis.blueprint</groupId>
-    <artifactId>spring-commander</artifactId>
-    <version>0.0.1</version>
-</dependency>
-```
-
-2. Create a command:
+1. Create a command:
 
 ```java
 public class CreateUserCommand implements Command<User> {
@@ -105,7 +95,7 @@ public class CreateUserCommand implements Command<User> {
 }
 ```
 
-3. Create a command handler:
+2. Create a command handler:
 
 ```java
 @Component
@@ -118,7 +108,7 @@ public class CreateUserCommandHandler implements CommandHandler<CreateUserComman
 }
 ```
 
-4. Use the mediator in your service:
+3. Use the mediator in your service:
 
 ```java
 @Service
