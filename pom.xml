@@ -33,9 +33,9 @@
     </properties>
 
     <scm>
-        <connection>scm:git:git@github.com:luismr/spring-commander-java.git</connection>
-        <developerConnection>scm:git:git@github.com:luismr/spring-commander-java.git</developerConnection>
-        <url>https://github.com/luismr/spring-commander-java</url>
+        <connection>scm:git:git@github.com:luismr/spring-commander.git</connection>
+        <developerConnection>scm:git:git@github.com:luismr/spring-commander.git</developerConnection>
+        <url>https://github.com/luismr/spring-commander</url>
         <tag>HEAD</tag>
     </scm>
 
