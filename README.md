@@ -57,22 +57,45 @@ git clone git@github.com:luismr/spring-commander.git
 
 #### Using Maven
 
-Add the following dependency to your `pom.xml`:
+1. Add the GitHub Packages repository to your `pom.xml`:
+
+```xml
+<repositories>
+    <repository>
+        <id>github</id>
+        <name>Spring Commander GitHub Packages</name>
+        <url>https://maven.pkg.github.com/luismr/spring-commander</url>
+    </repository>
+</repositories>
+```
+
+2. Add the dependency to your `pom.xml`:
 
 ```xml
 <dependency>
     <groupId>dev.luismachadoreis.blueprint</groupId>
     <artifactId>spring-commander</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 </dependency>
 ```
 
 ### Gradle
 
-Add the dependency to your `build.gradle`:
+1. Add the GitHub Packages repository to your `build.gradle`:
 
 ```groovy
-implementation 'dev.luismachadoreis.blueprint:spring-commander:0.0.2'
+repositories {
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/luismr/spring-commander")
+    }
+}
+```
+
+2. Add the dependency to your `build.gradle`:
+
+```groovy
+implementation 'dev.luismachadoreis.blueprint:spring-commander:0.0.3'
 ```
 
 ## Usage
