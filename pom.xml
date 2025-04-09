@@ -11,7 +11,7 @@
 
     <groupId>dev.luismachadoreis.blueprint</groupId>
     <artifactId>spring-commander</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>spring-commander</name>
     <description>Spring Commander is a lightweight framework for implementing the Command-Query Separation (CQS) pattern in Java Spring Boot, powered by a clean Mediator architecture.</description>
     <url>https://github.com/luismr/spring-commander</url>
@@ -34,7 +34,7 @@
         <connection>scm:git:git@github.com:luismr/spring-commander.git</connection>
         <developerConnection>scm:git:git@github.com:luismr/spring-commander.git</developerConnection>
         <url>https://github.com/luismr/spring-commander</url>
-        <tag>v0.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
