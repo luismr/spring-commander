@@ -33,6 +33,7 @@ public class SpringCommanderMediator {
      * @return The result of the command execution
      * @throws IllegalStateException if no handler is found for the command
      */
+    @SuppressWarnings("unchecked")
     public <T> T send(Command<T> command) {
         if (command == null) {
             throw new IllegalArgumentException("Command cannot be null");
@@ -54,6 +55,7 @@ public class SpringCommanderMediator {
      * @return The result of the query execution
      * @throws IllegalStateException if no handler is found for the query
      */
+    @SuppressWarnings("unchecked")
     public <T> T send(Query<T> query) {
         if (query == null) {
             throw new IllegalArgumentException("Query cannot be null");

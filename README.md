@@ -63,7 +63,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>dev.luismachadoreis.blueprint</groupId>
     <artifactId>spring-commander</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
 </dependency>
 ```
 
@@ -72,7 +72,7 @@ Add the following dependency to your `pom.xml`:
 Add the dependency to your `build.gradle`:
 
 ```groovy
-implementation 'dev.luismachadoreis.blueprint:spring-commander:0.0.1'
+implementation 'dev.luismachadoreis.blueprint:spring-commander:0.0.2'
 ```
 
 ## Usage
