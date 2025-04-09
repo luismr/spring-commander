@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class SpringMediatorTest {
+class SpringCommanderMediatorTest {
 
     @Mock
     private ApplicationContext applicationContext;
@@ -55,9 +55,7 @@ class SpringMediatorTest {
         // Given
         TestCommand command = new TestCommand("test");
         TestCommandHandler handler = new TestCommandHandler();
-        when(applicationContext.getBeanNamesForType(CommandHandler.class))
-                .thenReturn(new String[]{"testCommandHandler"});
-        when(applicationContext.getBean("testCommandHandler"))
+        when(applicationContext.getBean(CommandHandler.class))
                 .thenReturn(handler);
 
         // When
@@ -72,9 +70,7 @@ class SpringMediatorTest {
         // Given
         TestQuery query = new TestQuery(5);
         TestQueryHandler handler = new TestQueryHandler();
-        when(applicationContext.getBeanNamesForType(QueryHandler.class))
-                .thenReturn(new String[]{"testQueryHandler"});
-        when(applicationContext.getBean("testQueryHandler"))
+        when(applicationContext.getBean(QueryHandler.class))
                 .thenReturn(handler);
 
         // When
@@ -88,8 +84,8 @@ class SpringMediatorTest {
     void shouldThrowExceptionWhenNoCommandHandlerFound() {
         // Given
         TestCommand command = new TestCommand("test");
-        when(applicationContext.getBeanNamesForType(CommandHandler.class))
-                .thenReturn(new String[]{});
+        when(applicationContext.getBean(CommandHandler.class))
+                .thenReturn(null);
 
         // When/Then
         assertThatThrownBy(() -> mediator.send(command))
@@ -101,8 +97,8 @@ class SpringMediatorTest {
     void shouldThrowExceptionWhenNoQueryHandlerFound() {
         // Given
         TestQuery query = new TestQuery(5);
-        when(applicationContext.getBeanNamesForType(QueryHandler.class))
-                .thenReturn(new String[]{});
+        when(applicationContext.getBean(QueryHandler.class))
+                .thenReturn(null);
 
         // When/Then
         assertThatThrownBy(() -> mediator.send(query))
@@ -114,7 +110,7 @@ class SpringMediatorTest {
     void shouldThrowExceptionWhenCommandIsNull() {
         // When/Then
         assertThatThrownBy(() -> mediator.send((Command<String>) null))
-                .isInstanceOf(NullPointerException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Command cannot be null");
     }
 
@@ -122,7 +118,7 @@ class SpringMediatorTest {
     void shouldThrowExceptionWhenQueryIsNull() {
         // When/Then
         assertThatThrownBy(() -> mediator.send((Query<String>) null))
-                .isInstanceOf(NullPointerException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Query cannot be null");
     }
 } 

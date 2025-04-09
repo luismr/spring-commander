@@ -8,55 +8,62 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
- * SpringCommanderMediator is a mediator that uses Spring to find and execute command and query handlers.
- * It is a component that is used to send commands and queries to the system.
+ * Mediator implementation for handling commands and queries in a Spring Boot application.
+ * This class is responsible for finding and executing the appropriate handlers for commands and queries.
  */
 @Component
 public class SpringCommanderMediator {
  
     private final ApplicationContext applicationContext;
 
+    /**
+     * Creates a new SpringCommanderMediator instance.
+     *
+     * @param applicationContext The Spring application context used to find command and query handlers
+     */
     public SpringCommanderMediator(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
     /**
-     * Sends a command to the system.
-     * @param command The command to send.
-     * @return The result of the command.
+     * Sends a command to its handler and returns the result.
+     *
+     * @param <T> The type of the result returned by the command execution
+     * @param command The command to execute
+     * @return The result of the command execution
+     * @throws IllegalStateException if no handler is found for the command
      */
     public <T> T send(Command<T> command) {
         if (command == null) {
-            throw new NullPointerException("Command cannot be null");
+            throw new IllegalArgumentException("Command cannot be null");
         }
 
-        String[] beanNames = applicationContext.getBeanNamesForType(CommandHandler.class);
-        if (beanNames.length == 0) {
-            throw new IllegalStateException("No handler found for command");
+        CommandHandler<Command<T>, T> handler = applicationContext.getBean(CommandHandler.class);
+        if (handler == null) {
+            throw new IllegalStateException("No handler found for command: " + command.getClass().getName());
         }
 
-        @SuppressWarnings("unchecked")
-        CommandHandler<Command<T>, T> handler = (CommandHandler<Command<T>, T>) applicationContext.getBean(beanNames[0]);
         return handler.handle(command);
     }
 
     /**
-     * Sends a query to the system.
-     * @param query The query to send.
-     * @return The result of the query.
+     * Sends a query to its handler and returns the result.
+     *
+     * @param <T> The type of the result returned by the query execution
+     * @param query The query to execute
+     * @return The result of the query execution
+     * @throws IllegalStateException if no handler is found for the query
      */
     public <T> T send(Query<T> query) {
         if (query == null) {
-            throw new NullPointerException("Query cannot be null");
+            throw new IllegalArgumentException("Query cannot be null");
         }
 
-        String[] beanNames = applicationContext.getBeanNamesForType(QueryHandler.class);
-        if (beanNames.length == 0) {
-            throw new IllegalStateException("No handler found for query");
+        QueryHandler<Query<T>, T> handler = applicationContext.getBean(QueryHandler.class);
+        if (handler == null) {
+            throw new IllegalStateException("No handler found for query: " + query.getClass().getName());
         }
 
-        @SuppressWarnings("unchecked")
-        QueryHandler<Query<T>, T> handler = (QueryHandler<Query<T>, T>) applicationContext.getBean(beanNames[0]);
         return handler.handle(query);
     }
 } 

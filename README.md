@@ -14,6 +14,8 @@ Spring Commander is a lightweight framework for implementing the Command-Query S
 - Spring Boot auto-configuration
 - Type-safe command and query handling
 - Easy integration with Spring Boot applications
+- Comprehensive test coverage
+- GitHub Actions CI/CD pipeline
 
 ## Build Status
 
@@ -65,22 +67,45 @@ Add the following dependency to your `pom.xml`:
 </dependency>
 ```
 
+### Gradle
+
+Add the dependency to your `build.gradle`:
+
+```groovy
+implementation 'dev.luismachadoreis.blueprint:spring-commander:0.0.1-SNAPSHOT'
+```
+
 ## Usage
 
-### Commands
+### Basic Setup
 
-1. Create a command:
+1. Add the dependency to your Spring Boot application's `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>dev.luismachadoreis.blueprint</groupId>
+    <artifactId>spring-commander</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+
+2. Create a command:
 
 ```java
 public class CreateUserCommand implements Command<User> {
-    private String username;
-    private String email;
-    
-    // Getters and setters
+    private final String username;
+    private final String email;
+
+    public CreateUserCommand(String username, String email) {
+        this.username = username;
+        this.email = email;
+    }
+
+    // Getters
 }
 ```
 
-2. Create a command handler:
+3. Create a command handler:
 
 ```java
 @Component
@@ -88,6 +113,24 @@ public class CreateUserCommandHandler implements CommandHandler<CreateUserComman
     @Override
     public User handle(CreateUserCommand command) {
         // Implementation
+        return new User(command.getUsername(), command.getEmail());
+    }
+}
+```
+
+4. Use the mediator in your service:
+
+```java
+@Service
+public class UserService {
+    private final SpringCommanderMediator mediator;
+
+    public UserService(SpringCommanderMediator mediator) {
+        this.mediator = mediator;
+    }
+
+    public User createUser(String username, String email) {
+        return mediator.send(new CreateUserCommand(username, email));
     }
 }
 ```
@@ -131,9 +174,33 @@ public void example() {
 }
 ```
 
-## Contributing
+## Development
 
-Contributions are welcome! If you'd like to contribute:
+### Prerequisites
+
+- Java 21 or later
+- Maven 3.8 or later
+- Git
+
+### Building
+
+```bash
+git clone https://github.com/luismr/spring-commander-java.git
+cd spring-commander-java
+mvn clean install
+```
+
+### Testing
+
+```bash
+mvn test
+```
+
+### Code Coverage
+
+Code coverage reports are generated automatically during the build process. You can find the reports in the `target/site/jacoco` directory.
+
+## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -141,6 +208,74 @@ Contributions are welcome! If you'd like to contribute:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+## GitHub Actions
+
+The project uses GitHub Actions for continuous integration and deployment. The workflow includes:
+
+- Building and testing on multiple Java versions
+- Code coverage reporting
+- Automatic updates of code coverage badges
+- Deployment to GitHub Packages
+
+## Maven Release Process
+
+### Prerequisites
+
+1. Configure GitHub authentication in your Maven settings (`~/.m2/settings.xml`):
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>github</id>
+      <username>YOUR_GITHUB_USERNAME</username>
+      <password>YOUR_GITHUB_TOKEN</password>
+    </server>
+  </servers>
+</settings>
+```
+
+2. Create a GitHub Personal Access Token (PAT) with the following permissions:
+   - `read:packages`
+   - `write:packages`
+   - `delete:packages`
+
+### Performing a Release
+
+1. Prepare the release:
+```bash
+mvn release:prepare
+```
+This will:
+- Update version numbers
+- Create a Git tag
+- Update the SCM information
+
+2. Perform the release:
+```bash
+mvn release:perform
+```
+This will:
+- Checkout the tagged version
+- Build and deploy to GitHub Packages
+- Create source and Javadoc JARs
+
+### Version Management
+
+- SNAPSHOT versions are deployed to GitHub Packages automatically on each push to main
+- Release versions are created manually using the release process
+- Version format follows semantic versioning (MAJOR.MINOR.PATCH)
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details. 
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Author
+
+- **Luis Machado Reis** - [luismr](https://github.com/luismr)
+
+## Acknowledgments
+
+- Spring Boot team for the amazing framework
+- Martin Fowler for the CQS pattern
+- All contributors and users of this project 
