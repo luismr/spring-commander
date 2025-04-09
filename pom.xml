@@ -16,7 +16,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-commander</name>
     <description>Spring Commander is a lightweight framework for implementing the Command-Query Separation (CQS) pattern in Java Spring Boot, powered by a clean Mediator architecture.</description>
-    <url>https://github.com/luismr/spring-commander-java</url>
+    <url>https://github.com/luismr/spring-commander</url>
 
     <properties>
         <java.version>21</java.version>
@@ -43,12 +43,12 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/luismr/spring-commander-java</url>
+            <url>https://maven.pkg.github.com/luismr/spring-commander</url>
         </repository>
         <snapshotRepository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/luismr/spring-commander-java</url>
+            <url>https://maven.pkg.github.com/luismr/spring-commander</url>
         </snapshotRepository>
     </distributionManagement>
 
